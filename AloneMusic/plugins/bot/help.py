@@ -1,67 +1,18 @@
-#
-# Copyright (C) 2021-2022 by TheAloneteam@Github, < https://github.com/TheAloneTeam >.
-#
-# This file is part of < https://github.com/TheAloneTeam/AloneMusic > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TheAloneTeam/AloneMusic/blob/master/LICENSE >
-#
-# All rights reserved.
-
-from typing import Union
-from pyrogram import Client
 from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardMarkup, Message
+from typing import Union
 
 from AloneMusic import app
 from AloneMusic.misc import SUDOERS
-from AloneMusic.utils.inline.help import extra_features_panel
-from AloneMusic.utils import help_pannel
 from AloneMusic.utils.database import get_lang
-from AloneMusic.utils.decorators.language import LanguageStart, languageCB
+from AloneMusic.utils.decorators.language import LanguageStart
 from AloneMusic.utils.inline.help import help_back_markup, private_help_panel
+from AloneMusic.utils import help_pannel
 from config import BANNED_USERS, START_IMG_URL, SUPPORT_CHAT
 from strings import get_string, helpers
 
 
-@app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
-@app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
-async def helper_private(
-    client: app, update: Union[types.Message, types.CallbackQuery]
-):
-    is_callback = isinstance(update, types.CallbackQuery)
-    if is_callback:
-        try:
-            await update.answer()
-        except:
-            pass
-        chat_id = update.message.chat.id
-        language = await get_lang(chat_id)
-        _ = get_string(language)
-        keyboard = help_pannel(_, True)
-        await update.edit_message_text(
-            _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
-        )
-    else:
-        try:
-            await update.delete()
-        except:
-            pass
-        language = await get_lang(update.chat.id)
-        _ = get_string(language)
-        keyboard = help_pannel(_)
-        await update.reply_photo(
-            photo=START_IMG_URL,
-            has_spoiler=True,
-            caption=_["help_1"].format(SUPPORT_CHAT),
-            reply_markup=keyboard,
-        )
-
-@app.on_message(filters.command(["help"]) & filters.group & ~BANNED_USERS)
-@LanguageStart
-async def help_com_group(client, message: Message, _):
-    keyboard = private_help_panel(_)
-    await message.reply_text(_["help_2"], reply_markup=InlineKeyboardMarkup(keyboard))
-
+# 🔥 ALL HELP MAP
 HELP_MAP = {
     "hb1": helpers.HELP_1,
     "hb2": helpers.HELP_2,
@@ -74,9 +25,58 @@ HELP_MAP = {
     "hb9": helpers.HELP_9,
     "hb10": helpers.HELP_10,
     "hb11": helpers.HELP_11,
-    "hb12": helpers.HELP_12,  # future ready 😎
+    "hb12": helpers.HELP_12,
 }
 
+
+# 🔹 PRIVATE HELP
+@app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
+@app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
+async def helper_private(client, update: Union[types.Message, types.CallbackQuery]):
+
+    is_callback = isinstance(update, types.CallbackQuery)
+
+    if is_callback:
+        await update.answer()
+
+        chat_id = update.message.chat.id
+        language = await get_lang(chat_id)
+        _ = get_string(language)
+
+        keyboard = help_pannel(_, True)
+
+        await update.edit_message_text(
+            _["help_1"].format(SUPPORT_CHAT),
+            reply_markup=keyboard
+        )
+
+    else:
+        try:
+            await update.delete()
+        except:
+            pass
+
+        language = await get_lang(update.chat.id)
+        _ = get_string(language)
+
+        keyboard = help_pannel(_)
+
+        await update.reply_photo(
+            photo=START_IMG_URL,
+            caption=_["help_1"].format(SUPPORT_CHAT),
+            reply_markup=keyboard,
+        )
+
+
+# 🔹 GROUP HELP
+@app.on_message(filters.command(["help"]) & filters.group & ~BANNED_USERS)
+@LanguageStart
+async def help_com_group(client, message: Message, _):
+    keyboard = private_help_panel(_)
+    await message.reply_text(_["help_2"], reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+# 🔥 MAIN CALLBACK HANDLER
 @app.on_callback_query()
 async def all_callbacks(client, query):
     await query.answer()
@@ -92,27 +92,19 @@ async def all_callbacks(client, query):
         cb = data.split()[1]
         keyboard = help_back_markup(_)
 
-        # 🔒 sudo protection only for hb7
+        # 🔒 sudo protection
         if cb == "hb7":
             if query.from_user.id not in SUDOERS:
                 return await query.answer("Only for sudo users", show_alert=True)
 
-        # 🔥 ALL HELP HANDLED HERE
         if cb in HELP_MAP:
             return await query.message.edit_text(
                 HELP_MAP[cb],
                 reply_markup=keyboard
             )
 
-    # ================= EXTRA FEATURES PANEL =================
-    elif data == "extra_features":
-        return await query.message.edit_text(
-            "💡 Select a feature below:",
-            reply_markup=extra_features_panel(_)
-        )
-
-    # ================= BACK BUTTON =================
-    elif data in ["help_back", "settings_back_helper"]:
+    # ================= BACK =================
+    elif data == "help_back" or data == "settings_back_helper":
         return await query.message.edit_text(
             _["help_1"].format(SUPPORT_CHAT),
             reply_markup=help_pannel(_, True)
