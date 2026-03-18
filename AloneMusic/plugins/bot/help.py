@@ -1,18 +1,18 @@
+from typing import Union
 from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardMarkup, Message
-from typing import Union
 
 from AloneMusic import app
 from AloneMusic.misc import SUDOERS
-from AloneMusic.utils.database import get_lang
-from AloneMusic.utils.decorators.language import LanguageStart
-from AloneMusic.utils.inline.help import help_back_markup, private_help_panel
 from AloneMusic.utils import help_pannel
+from AloneMusic.utils.database import get_lang
+from AloneMusic.utils.decorators.language import LanguageStart, languageCB
+from AloneMusic.utils.inline.help import help_back_markup, private_help_panel
 from config import BANNED_USERS, START_IMG_URL, SUPPORT_CHAT
 from strings import get_string, helpers
 
 
-# 🔥 ALL HELP MAP
+# 🔥 ALL HELP MAP (FINAL SYSTEM)
 HELP_MAP = {
     "hb1": helpers.HELP_1,
     "hb2": helpers.HELP_2,
@@ -29,7 +29,7 @@ HELP_MAP = {
 }
 
 
-# 🔹 PRIVATE HELP
+# ================= PRIVATE HELP =================
 @app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
 @app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
 async def helper_private(client, update: Union[types.Message, types.CallbackQuery]):
@@ -68,7 +68,7 @@ async def helper_private(client, update: Union[types.Message, types.CallbackQuer
         )
 
 
-# 🔹 GROUP HELP
+# ================= GROUP HELP =================
 @app.on_message(filters.command(["help"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def help_com_group(client, message: Message, _):
@@ -76,36 +76,26 @@ async def help_com_group(client, message: Message, _):
     await message.reply_text(_["help_2"], reply_markup=InlineKeyboardMarkup(keyboard))
 
 
-# 🔥 MAIN CALLBACK HANDLER
-@app.on_callback_query()
-async def all_callbacks(client, query):
-    await query.answer()
+# ================= CALLBACK HANDLER =================
+@app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
+@languageCB
+async def helper_cb(client, CallbackQuery, _):
+    data = CallbackQuery.data.strip()
+    cb = data.split(None, 1)[1]
 
-    chat_id = query.message.chat.id
-    language = await get_lang(chat_id)
-    _ = get_string(language)
+    keyboard = help_back_markup(_)
 
-    data = query.data
-
-    # ================= HELP SYSTEM =================
-    if data.startswith("help_callback"):
-        cb = data.split()[1]
-        keyboard = help_back_markup(_)
-
-        # 🔒 sudo protection
-        if cb == "hb7":
-            if query.from_user.id not in SUDOERS:
-                return await query.answer("Only for sudo users", show_alert=True)
-
-        if cb in HELP_MAP:
-            return await query.message.edit_text(
-                HELP_MAP[cb],
-                reply_markup=keyboard
+    # 🔒 SUDO PROTECTION
+    if cb == "hb7":
+        if CallbackQuery.from_user.id not in SUDOERS:
+            return await CallbackQuery.answer(
+                "Only for sudo users",
+                show_alert=True
             )
 
-    # ================= BACK =================
-    elif data == "help_back" or data == "settings_back_helper":
-        return await query.message.edit_text(
-            _["help_1"].format(SUPPORT_CHAT),
-            reply_markup=help_pannel(_, True)
+    # 🔥 MAIN SYSTEM (AUTO HANDLE ALL)
+    if cb in HELP_MAP:
+        return await CallbackQuery.edit_message_text(
+            HELP_MAP[cb],
+            reply_markup=keyboard
         )
