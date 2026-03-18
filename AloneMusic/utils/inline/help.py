@@ -95,7 +95,7 @@ def extra_features_panel(_):
         ],
         # 3rd row: Back button
         [
-            InlineKeyboardButton(text=_["BACK_BUTTON"], callback_data="settings_back_helper")
+            InlineKeyboardButton(text=_["BACK_BUTTON"], callback_data="help_back")
         ]
     ]
     return InlineKeyboardMarkup(buttons)
