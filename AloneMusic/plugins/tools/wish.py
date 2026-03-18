@@ -2,7 +2,7 @@ import asyncio
 import random
 from pyrogram import filters
 from pyrogram.types import Message
-from ShrutiMusic import app
+from AloneMusic import app
 
 active_chats = {}
 
