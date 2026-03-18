@@ -1,23 +1,32 @@
+#
+# Copyright (C) 2021-2022 by TheAloneteam@Github, < https://github.com/TheAloneTeam >.
+#
+# This file is part of < https://github.com/TheAloneTeam/AloneMusic > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/TheAloneTeam/AloneMusic/blob/master/LICENSE >
+#
+# All rights reserved.
+
 from typing import Union
+
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
 from AloneMusic import app
 
 
-# 🔹 MAIN HELP PANEL
 def help_pannel(_, START: Union[bool, int] = None):
-
-    first = [InlineKeyboardButton(_["CLOSE_BUTTON"], callback_data="close")]
+    first = [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")]
 
     second = [
         InlineKeyboardButton(
-            _["BACK_BUTTON"],
-            callback_data="settings_back_helper",  # ✅ start panel back
+            text=_["BACK_BUTTON"],
+            callback_data="settings_back_helper",  # ✅ spelling fix bhi
         ),
     ]
 
     mark = second if START else first
 
-    return InlineKeyboardMarkup(
+    upl = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(_["H_B_1"], callback_data="help_callback hb1"),
@@ -34,6 +43,7 @@ def help_pannel(_, START: Union[bool, int] = None):
                 InlineKeyboardButton(_["H_B_8"], callback_data="help_callback hb8"),
                 InlineKeyboardButton(_["H_B_9"], callback_data="help_callback hb9"),
             ],
+            # 🔥 NEW ROW (hb10–hb12)
             [
                 InlineKeyboardButton("TagAll", callback_data="help_callback hb10"),
                 InlineKeyboardButton("Bans", callback_data="help_callback hb11"),
@@ -42,29 +52,29 @@ def help_pannel(_, START: Union[bool, int] = None):
             mark,
         ]
     )
+    return upl
 
-
-# 🔹 BACK BUTTON (INSIDE HELP)
 def help_back_markup(_):
-    return InlineKeyboardMarkup(
+    upl = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(
-                    _["BACK_BUTTON"],
-                    callback_data="help_back",  # ✅ FIXED
-                )
+                    text=_["BACK_BUTTON"],
+                    callback_data="settings_back_helper",
+                ),
             ]
         ]
     )
+    return upl
 
 
-# 🔹 GROUP BUTTON
 def private_help_panel(_):
-    return [
+    buttons = [
         [
             InlineKeyboardButton(
-                _["S_B_4"],
+                text=_["S_B_4"],
                 url=f"https://t.me/{app.username}?start=help",
-            )
-        ]
+            ),
+        ],
     ]
+    return buttons
