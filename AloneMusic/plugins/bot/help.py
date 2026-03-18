@@ -55,6 +55,42 @@ async def helper_private(
             reply_markup=keyboard,
         )
 
+@Client.on_callback_query()
+async def cb_handler(client, query):
+    data = query.data
+
+    if data == "extra_features":
+        await query.message.edit(
+            text="💡 Extra Features:",  # ya helper string use kar sakte ho
+            reply_markup=extra_features_panel(_)
+        )
+    elif data == "help_back":
+        await query.message.edit(
+            text="📖 Help & Commands:",  # ya helper string use kar sakte ho
+            reply_markup=help_pannel(_, START=True)
+        )
+
+    # Individual feature buttons
+    elif data == "tagall":
+        await query.message.edit(
+            text=_["TAGALL_HELP"],
+            reply_markup=extra_features_panel(_)
+        )
+    elif data == "bans":
+        await query.message.edit(
+            text=_["BANS_HELP"],
+            reply_markup=extra_features_panel(_)
+        )
+    elif data == "gpt_vc_logger":
+        await query.message.edit(
+            text=_["GPT_VC_HELP"],
+            reply_markup=extra_features_panel(_)
+        )
+    elif data == "other_feature":
+        await query.message.edit(
+            text=_["OTHER_FEATURE_HELP"],
+            reply_markup=extra_features_panel(_)
+        )
 
 @app.on_message(filters.command(["help"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
