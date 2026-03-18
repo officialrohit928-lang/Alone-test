@@ -12,7 +12,7 @@ from config import BANNED_USERS, START_IMG_URL, SUPPORT_CHAT
 from strings import get_string, helpers
 
 
-# 🔥 ALL HELP MAP (FINAL SYSTEM)
+# 🔥 ALL HELP MAP (hb1 → hb12)
 HELP_MAP = {
     "hb1": helpers.HELP_1,
     "hb2": helpers.HELP_2,
@@ -76,16 +76,17 @@ async def help_com_group(client, message: Message, _):
     await message.reply_text(_["help_2"], reply_markup=InlineKeyboardMarkup(keyboard))
 
 
-# ================= CALLBACK HANDLER =================
+# ================= HELP BUTTON CALLBACK =================
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
 @languageCB
 async def helper_cb(client, CallbackQuery, _):
+
     data = CallbackQuery.data.strip()
     cb = data.split(None, 1)[1]
 
     keyboard = help_back_markup(_)
 
-    # 🔒 SUDO PROTECTION
+    # 🔒 SUDO PROTECTION (hb7)
     if cb == "hb7":
         if CallbackQuery.from_user.id not in SUDOERS:
             return await CallbackQuery.answer(
@@ -93,9 +94,20 @@ async def helper_cb(client, CallbackQuery, _):
                 show_alert=True
             )
 
-    # 🔥 MAIN SYSTEM (AUTO HANDLE ALL)
+    # 🔥 AUTO HANDLE ALL HELP BUTTONS
     if cb in HELP_MAP:
-        return await CallbackQuery.edit_message_text(
+        await CallbackQuery.edit_message_text(
             HELP_MAP[cb],
             reply_markup=keyboard
+        )
+
+
+# ================= 🔙 BACK TO HELP MENU =================
+@app.on_callback_query(filters.regex("help_back") & ~BANNED_USERS)
+@languageCB
+async def help_back_cb(client, CallbackQuery, _):
+
+    await CallbackQuery.edit_message_text(
+        _["help_1"].format(SUPPORT_CHAT),
+        reply_markup=help_pannel(_, True)
         )
