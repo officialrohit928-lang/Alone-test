@@ -11,6 +11,7 @@ from pyrogram.types import InlineKeyboardButton
 
 import config
 from AloneMusic import app
+from pyrogram import enums
 
 
 def start_panel(_):
@@ -24,9 +25,6 @@ def start_panel(_):
     ]
     return buttons
 
-
-from pyrogram.types import InlineKeyboardButton
-from pyrogram import enums  # 👈 ensure ye import hai
 
 def private_panel(_):
     buttons = [
