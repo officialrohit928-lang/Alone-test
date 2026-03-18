@@ -14,6 +14,7 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 
 from AloneMusic import app
 from AloneMusic.misc import SUDOERS
+from AloneMusic.utils.inline.help import extra_features_panel
 from AloneMusic.utils import help_pannel
 from AloneMusic.utils.database import get_lang
 from AloneMusic.utils.decorators.language import LanguageStart, languageCB
