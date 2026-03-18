@@ -5,6 +5,7 @@ from pyrogram import Client, filters
 from pyrogram.enums import ChatType, ChatMemberStatus
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import ChatPermissions
+from pyrogram.enums import ParseMode 
 
 spam_chats = []
 
