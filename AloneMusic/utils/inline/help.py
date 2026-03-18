@@ -45,9 +45,9 @@ def help_pannel(_, START: Union[bool, int] = None):
             ],
             # 🔥 NEW ROW (hb10–hb12)
             [
-                InlineKeyboardButton("TagAll", callback_data="help_callback hb10"),
-                InlineKeyboardButton("Bans", callback_data="help_callback hb11"),
-                InlineKeyboardButton("VC Logger", callback_data="help_callback hb12"),
+                InlineKeyboardButton("Tᴀɢᴀʟʟ", callback_data="help_callback hb10"),
+                InlineKeyboardButton("Wɪsʜ ᴛᴀɢ", callback_data="help_callback hb11"),
+                InlineKeyboardButton("Vᴄ ʟᴏɢs", callback_data="help_callback hb12"),
             ],
             mark,
         ]
