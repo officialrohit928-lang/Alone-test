@@ -25,18 +25,36 @@ def start_panel(_):
     return buttons
 
 
+from pyrogram.types import InlineKeyboardButton
+from pyrogram import enums  # 👈 ensure ye import hai
+
 def private_panel(_):
     buttons = [
         [
             InlineKeyboardButton(
                 text=_["S_B_3"],
                 url=f"https://t.me/{app.username}?startgroup=true",
+                style=enums.ButtonStyle.SUCCESS  # 🟢 Green (Add Me)
             )
         ],
         [
-            InlineKeyboardButton(text=_["S_B_2"], callback_data="shiv_aarumi"),
-            InlineKeyboardButton(text="💌 ʏᴛ-ᴀᴘɪ", callback_data="bot_info_data"),
+            InlineKeyboardButton(
+                text=_["S_B_2"],
+                callback_data="shiv_aarumi",
+                style=enums.ButtonStyle.PRIMARY  # 🔵 Blue (Support)
+            ),
+            InlineKeyboardButton(
+                text="💌 ʏᴛ-ᴀᴘɪ",
+                callback_data="bot_info_data",
+                style=enums.ButtonStyle.SECONDARY  # ⚪ Grey
+            ),
         ],
-        [InlineKeyboardButton(text=_["S_B_4"], callback_data="settings_back_helper")],
+        [
+            InlineKeyboardButton(
+                text=_["S_B_4"],
+                callback_data="settings_back_helper",
+                style=enums.ButtonStyle.DANGER  # 🔴 Red (Back)
+            )
+        ],
     ]
     return buttons
