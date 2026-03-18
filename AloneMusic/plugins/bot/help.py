@@ -114,19 +114,19 @@ async def all_callbacks(client, query):
 
     elif data == "tagall":
         await query.message.edit(
-            text=_["TAGALL_HELP"],
+            text=TAGALL_HELP,
             reply_markup=extra_features_panel(_)
         )
 
     elif data == "bans":
         await query.message.edit(
-            text=_["BANS_HELP"],
+            text=BANS_HELP,
             reply_markup=extra_features_panel(_)
         )
 
     elif data == "gpt_vc_logger":
         await query.message.edit(
-            text=_["GPT_VC_HELP"],
+            text=GPT_VC_HELP,
             reply_markup=extra_features_panel(_)
         )
 
