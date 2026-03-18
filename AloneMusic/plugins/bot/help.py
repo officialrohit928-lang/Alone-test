@@ -8,7 +8,7 @@
 # All rights reserved.
 
 from typing import Union
-
+from pyrogram import Client
 from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardMarkup, Message
 
