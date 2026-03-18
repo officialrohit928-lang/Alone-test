@@ -8,7 +8,7 @@ def help_pannel(_, START: Union[bool, int] = None):
     second = [
         InlineKeyboardButton(
             text=_["BACK_BUTTON"],
-            callback_data="settings_back_helper",
+            callback_data="settings_back_helper",  # ✅ FIXED
         ),
     ]
     mark = second if START else first
@@ -30,7 +30,7 @@ def help_pannel(_, START: Union[bool, int] = None):
                 InlineKeyboardButton(_["H_B_8"], callback_data="help_callback hb8"),
                 InlineKeyboardButton(_["H_B_9"], callback_data="help_callback hb9"),
             ],
-            # 🔥 EXTRA FEATURES (MERGED)
+            # 🔥 NEW EXTRA BUTTONS ROW
             [
                 InlineKeyboardButton("TagAll", callback_data="help_callback hb10"),
                 InlineKeyboardButton("Bans", callback_data="help_callback hb11"),
@@ -40,8 +40,6 @@ def help_pannel(_, START: Union[bool, int] = None):
         ]
     )
     return upl
-
-
 # 🔹 BACK BUTTON (INSIDE HELP)
 def help_back_markup(_):
     return InlineKeyboardMarkup(
