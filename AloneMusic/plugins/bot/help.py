@@ -69,8 +69,12 @@ HELP_MAP = {
     "hb4": helpers.HELP_4,
     "hb5": helpers.HELP_5,
     "hb6": helpers.HELP_6,
+    "hb7": helpers.HELP_7,
     "hb8": helpers.HELP_8,
     "hb9": helpers.HELP_9,
+    "hb10": helpers.HELP_10,
+    "hb11": helpers.HELP_11,
+    "hb12": helpers.HELP_12,  # future ready 😎
 }
 
 @app.on_callback_query()
@@ -83,62 +87,33 @@ async def all_callbacks(client, query):
 
     data = query.data
 
-    # ================= HELP BUTTONS =================
+    # ================= HELP SYSTEM =================
     if data.startswith("help_callback"):
         cb = data.split()[1]
         keyboard = help_back_markup(_)
 
-        # sudo check
+        # 🔒 sudo protection only for hb7
         if cb == "hb7":
             if query.from_user.id not in SUDOERS:
                 return await query.answer("Only for sudo users", show_alert=True)
 
-            return await query.message.edit_text(
-                helpers.HELP_7,
-                reply_markup=keyboard
-            )
-
-        # auto handle others
+        # 🔥 ALL HELP HANDLED HERE
         if cb in HELP_MAP:
             return await query.message.edit_text(
                 HELP_MAP[cb],
                 reply_markup=keyboard
             )
 
-    # ================= EXTRA FEATURES =================
-    if data == "extra_features":
+    # ================= EXTRA FEATURES PANEL =================
+    elif data == "extra_features":
         return await query.message.edit_text(
-            "💡 Extra Features:",
+            "💡 Select a feature below:",
             reply_markup=extra_features_panel(_)
         )
 
-    elif data == "tagall":
-        return await query.message.edit_text(
-            TAGALL_HELP,
-            reply_markup=extra_features_panel(_)
-        )
-
-    elif data == "bans":
-        return await query.message.edit_text(
-            BANS_HELP,
-            reply_markup=extra_features_panel(_)
-        )
-
-    elif data == "gpt_vc_logger":
-        return await query.message.edit_text(
-            GPT_VC_HELP,
-            reply_markup=extra_features_panel(_)
-        )
-
-    elif data == "other_feature":
-        return await query.message.edit_text(
-            _["OTHER_FEATURE_HELP"],
-            reply_markup=extra_features_panel(_)
-        )
-
-    # ================= BACK =================
-    elif data == "help_back" or data == "settings_back_helper":
+    # ================= BACK BUTTON =================
+    elif data in ["help_back", "settings_back_helper"]:
         return await query.message.edit_text(
             _["help_1"].format(SUPPORT_CHAT),
             reply_markup=help_pannel(_, True)
-    )
+        )
