@@ -62,6 +62,16 @@ async def help_com_group(client, message: Message, _):
     keyboard = private_help_panel(_)
     await message.reply_text(_["help_2"], reply_markup=InlineKeyboardMarkup(keyboard))
 
+HELP_MAP = {
+    "hb1": helpers.HELP_1,
+    "hb2": helpers.HELP_2,
+    "hb3": helpers.HELP_3,
+    "hb4": helpers.HELP_4,
+    "hb5": helpers.HELP_5,
+    "hb6": helpers.HELP_6,
+    "hb8": helpers.HELP_8,
+    "hb9": helpers.HELP_9,
+}
 
 @app.on_callback_query()
 async def all_callbacks(client, query):
@@ -73,72 +83,62 @@ async def all_callbacks(client, query):
 
     data = query.data
 
-    # 🔹 Main Help Buttons (hb1-hb9)
+    # ================= HELP BUTTONS =================
     if data.startswith("help_callback"):
         cb = data.split()[1]
         keyboard = help_back_markup(_)
 
-        if cb == "hb1":
-            await query.message.edit_text(helpers.HELP_1, reply_markup=keyboard)
-        elif cb == "hb2":
-            await query.message.edit_text(helpers.HELP_2, reply_markup=keyboard)
-        elif cb == "hb3":
-            await query.message.edit_text(helpers.HELP_3, reply_markup=keyboard)
-        elif cb == "hb4":
-            await query.message.edit_text(helpers.HELP_4, reply_markup=keyboard)
-        elif cb == "hb5":
-            await query.message.edit_text(helpers.HELP_5, reply_markup=keyboard)
-        elif cb == "hb6":
-            await query.message.edit_text(helpers.HELP_6, reply_markup=keyboard)
-        elif cb == "hb7":
+        # sudo check
+        if cb == "hb7":
             if query.from_user.id not in SUDOERS:
                 return await query.answer("Only for sudo users", show_alert=True)
-            await query.message.edit_text(helpers.HELP_7, reply_markup=keyboard)
-        elif cb == "hb8":
-            await query.message.edit_text(helpers.HELP_8, reply_markup=keyboard)
-        elif cb == "hb9":
-            await query.message.edit_text(helpers.HELP_9, reply_markup=keyboard)
 
-    # 🔹 Extra Features
-    elif data == "extra_features":
-        await query.message.edit(
-            text="💡 Extra Features:",
+            return await query.message.edit_text(
+                helpers.HELP_7,
+                reply_markup=keyboard
+            )
+
+        # auto handle others
+        if cb in HELP_MAP:
+            return await query.message.edit_text(
+                HELP_MAP[cb],
+                reply_markup=keyboard
+            )
+
+    # ================= EXTRA FEATURES =================
+    if data == "extra_features":
+        return await query.message.edit_text(
+            "💡 Extra Features:",
             reply_markup=extra_features_panel(_)
         )
 
-    elif data == "help_back":
-        await query.message.edit(
-            text=_["help_1"].format(SUPPORT_CHAT),
-            reply_markup=help_pannel(_, True)
-        )
-
     elif data == "tagall":
-        await query.message.edit(
-            text=TAGALL_HELP,
+        return await query.message.edit_text(
+            TAGALL_HELP,
             reply_markup=extra_features_panel(_)
         )
 
     elif data == "bans":
-        await query.message.edit(
-            text=BANS_HELP,
+        return await query.message.edit_text(
+            BANS_HELP,
             reply_markup=extra_features_panel(_)
         )
 
     elif data == "gpt_vc_logger":
-        await query.message.edit(
-            text=GPT_VC_HELP,
+        return await query.message.edit_text(
+            GPT_VC_HELP,
             reply_markup=extra_features_panel(_)
         )
 
     elif data == "other_feature":
-        await query.message.edit(
-            text=_["OTHER_FEATURE_HELP"],
+        return await query.message.edit_text(
+            _["OTHER_FEATURE_HELP"],
             reply_markup=extra_features_panel(_)
         )
 
-    # 🔹 Back to main help (settings_back_helper)
-    elif data == "settings_back_helper":
-        await query.message.edit(
-            text=_["help_1"].format(SUPPORT_CHAT),
+    # ================= BACK =================
+    elif data == "help_back" or data == "settings_back_helper":
+        return await query.message.edit_text(
+            _["help_1"].format(SUPPORT_CHAT),
             reply_markup=help_pannel(_, True)
-                                         )
+    )
