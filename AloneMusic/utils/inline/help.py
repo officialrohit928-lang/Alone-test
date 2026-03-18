@@ -2,18 +2,22 @@ from typing import Union
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from AloneMusic import app
 
+
 # 🔹 MAIN HELP PANEL
 def help_pannel(_, START: Union[bool, int] = None):
-    first = [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")]
+
+    first = [InlineKeyboardButton(_["CLOSE_BUTTON"], callback_data="close")]
+
     second = [
         InlineKeyboardButton(
-            text=_["BACK_BUTTON"],
-            callback_data="settings_back_helper",  # ✅ FIXED
+            _["BACK_BUTTON"],
+            callback_data="settings_back_helper",  # ✅ start panel back
         ),
     ]
+
     mark = second if START else first
 
-    upl = InlineKeyboardMarkup(
+    return InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(_["H_B_1"], callback_data="help_callback hb1"),
@@ -30,7 +34,6 @@ def help_pannel(_, START: Union[bool, int] = None):
                 InlineKeyboardButton(_["H_B_8"], callback_data="help_callback hb8"),
                 InlineKeyboardButton(_["H_B_9"], callback_data="help_callback hb9"),
             ],
-            # 🔥 NEW EXTRA BUTTONS ROW
             [
                 InlineKeyboardButton("TagAll", callback_data="help_callback hb10"),
                 InlineKeyboardButton("Bans", callback_data="help_callback hb11"),
@@ -39,27 +42,28 @@ def help_pannel(_, START: Union[bool, int] = None):
             mark,
         ]
     )
-    return upl
+
+
 # 🔹 BACK BUTTON (INSIDE HELP)
 def help_back_markup(_):
     return InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(
-                    text=_["BACK_BUTTON"],
-                    callback_data="settings_back_helper",
+                    _["BACK_BUTTON"],
+                    callback_data="help_back",  # ✅ FIXED
                 )
             ]
         ]
     )
 
 
-# 🔹 GROUP HELP BUTTON
+# 🔹 GROUP BUTTON
 def private_help_panel(_):
     return [
         [
             InlineKeyboardButton(
-                text=_["S_B_4"],
+                _["S_B_4"],
                 url=f"https://t.me/{app.username}?start=help",
             )
         ]
