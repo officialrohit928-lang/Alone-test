@@ -55,18 +55,22 @@ async def helper_private(
             reply_markup=keyboard,
         )
 
-@Client.on_callback_query()
+@app.on_callback_query()
 async def cb_handler(client, query):
+    chat_id = query.message.chat.id
+    language = await get_lang(chat_id)
+    _ = get_string(language)  # <-- helper strings
+
     data = query.data
 
     if data == "extra_features":
         await query.message.edit(
-            text="💡 Extra Features:",  # ya helper string use kar sakte ho
+            text="💡 Extra Features:",
             reply_markup=extra_features_panel(_)
         )
     elif data == "help_back":
         await query.message.edit(
-            text="📖 Help & Commands:",  # ya helper string use kar sakte ho
+            text="📖 Help & Commands:",
             reply_markup=help_pannel(_, START=True)
         )
 
