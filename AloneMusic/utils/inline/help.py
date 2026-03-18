@@ -8,12 +8,10 @@
 # All rights reserved.
 
 from typing import Union
-
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-
 from AloneMusic import app
 
-
+# Main Help Panel
 def help_pannel(_, START: Union[bool, int] = None):
     first = [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")]
     second = [
@@ -23,6 +21,7 @@ def help_pannel(_, START: Union[bool, int] = None):
         ),
     ]
     mark = second if START else first
+
     upl = InlineKeyboardMarkup(
         [
             [
@@ -67,12 +66,40 @@ def help_pannel(_, START: Union[bool, int] = None):
                     callback_data="help_callback hb9",
                 ),
             ],
+            # Extra Features Button Row
+            [
+                InlineKeyboardButton(
+                    text="Extra Features",  # aap chahe toh helper me bhi define kar sakte ho
+                    callback_data="extra_features"
+                )
+            ],
             mark,
         ]
     )
     return upl
 
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+def extra_features_panel(_):
+    buttons = [
+        # 1st row: 3 buttons
+        [
+            InlineKeyboardButton(text="TagAll", callback_data="tagall"),
+            InlineKeyboardButton(text="Bans", callback_data="bans"),
+            InlineKeyboardButton(text="VC Logger", callback_data="gpt_vc_logger"),
+        ],
+        # 2nd row: 2 buttons
+        [
+            InlineKeyboardButton(text="Other Feature", callback_data="other_feature"),
+            InlineKeyboardButton(text="Another Feature", callback_data="another_feature"),  # optional
+        ],
+        # 3rd row: Back button
+        [
+            InlineKeyboardButton(text=_["BACK_BUTTON"], callback_data="settings_back_helper")
+        ]
+    ]
+    return InlineKeyboardMarkup(buttons)
+    
 def help_back_markup(_):
     upl = InlineKeyboardMarkup(
         [
