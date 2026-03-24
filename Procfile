@@ -1,1 +1,1 @@
-worker: python3 -m AloneMusic
+worker: pip uninstall -y pyrogram && python -m AloneMusic
