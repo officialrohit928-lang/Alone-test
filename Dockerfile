@@ -1,15 +1,23 @@
+# Use official slim Python 3.10 image
 FROM python:3.10-slim
 
+# Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     git \
     && rm -rf /var/lib/apt/lists/*
 
+# Set working directory
 WORKDIR /app
 
+# Copy project files
 COPY . .
 
-RUN pip install -U pip uv
-RUN uv pip install --system .
+# Upgrade pip
+RUN pip install --upgrade pip
 
-CMD ["AloneMusic"]
+# Install Python dependencies (including public pyrofork)
+RUN pip install .
+
+# Command to run your bot
+CMD ["python", "AloneMusic"]
