@@ -40,7 +40,10 @@ dependencies = [
   "unidecode>=1.3.8",
   "tgcrypto>=1.2.5",
   "pyrofork==2.3.45",
-  "pyrogram @ git+https://github.com/pyrofork/pyrofork.git@master",
+
+  # 🔥 FIXED PYROGRAM INSTALL WITHOUT GIT PROMPT
+  "pyrogram @ https://github.com/pyrofork/pyrofork/archive/refs/heads/master.zip",
+
   "ffmpeg-python>=0.2.0",
   "py-tgcalls==2.2.11",
   "ntgcalls==2.1.0",
