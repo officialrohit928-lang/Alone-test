@@ -1,15 +1,17 @@
 #
-# Copyright (C) 2021-2022 by TheAloneteam@Github, < https://github.com/TheAloneTeam >.
-# This file is part of < https://github.com/TheAloneTeam/AloneMusic > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TheAloneTeam/AloneMusic/blob/master/LICENSE >
-#
+# Copyright (C) 2021-2022 by TheAloneteam@Github
 # All rights reserved.
+#
 
 import asyncio
 import importlib
 
 from pyrogram import idle
+
+# ✅ DEBUG (check pyrofork / pyrogram)
+import pyrogram
+print("🔥 USING LIB:", pyrogram.__file__)
+
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
@@ -31,22 +33,31 @@ async def init():
     ):
         LOGGER(__name__).error("Assistant client variables not defined, exiting...")
         exit()
+
     await sudo()
+
     try:
         users = await get_gbanned()
         for user_id in users:
             BANNED_USERS.add(user_id)
+
         users = await get_banned_users()
         for user_id in users:
             BANNED_USERS.add(user_id)
+
     except:
         pass
+
     await app.start()
+
     for all_module in ALL_MODULES:
         importlib.import_module("AloneMusic.plugins" + all_module)
+
     LOGGER("AloneMusic.plugins").info("Successfully Imported Modules...")
+
     await userbot.start()
     await Alone.start()
+
     try:
         await Alone.stream_call("https://te.legra.ph/file/29f784eb49d230ab62e9e.mp4")
     except NoActiveGroupCall:
@@ -56,13 +67,16 @@ async def init():
         exit()
     except:
         pass
+
     await Alone.decorators()
-    LOGGER("AloneMusic").info(
-        "ʙᴏᴛ sᴛᴀʀᴛᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ"
-    )
+
+    LOGGER("AloneMusic").info("ʙᴏᴛ sᴛᴀʀᴛᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ")
+
     await idle()
+
     await app.stop()
     await userbot.stop()
+
     LOGGER("AloneMusic").info("Stopping 𝚻հҽ 𝚨Łꪮⲛ𝛆 🚩𝗧ε᧘‌ᴍ Bot...")
 
 
