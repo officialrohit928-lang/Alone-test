@@ -1,4 +1,4 @@
-git+https://github.com/TeamYukki/PyroFork
+git+https://github.com/Kurigram/pyrofork.git@main
 tgcrypto>=1.2.5
 
 aiofiles>=23.2.1
