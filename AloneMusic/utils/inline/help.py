@@ -33,7 +33,7 @@ def help_pannel(_, START: Union[bool, int] = None):
         [
             [
                 InlineKeyboardButton(
-                    _["H_B_1"], callback_data="help_callback:hb1",
+                    _["H_B_1"], callback_data="help_callback hb1",
                     style=ButtonStyle.SUCCESS if ButtonStyle else None
                 ),
                 InlineKeyboardButton(
