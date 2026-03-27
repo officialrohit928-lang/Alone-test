@@ -101,7 +101,6 @@ async def start_pm(client, message: Message, _):
         await message.reply_photo(
             photo=config.START_IMG_URL,
             has_spoiler=True,
-            message_effect_id=random.choice(EFFECT_ID),
             caption=_["start_2"].format(message.from_user.mention, app.mention),
             reply_markup=InlineKeyboardMarkup(out),
         )
