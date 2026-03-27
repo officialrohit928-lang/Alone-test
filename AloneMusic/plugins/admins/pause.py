@@ -11,7 +11,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from AloneMusic import app
-from AloneMusic.core.call import Alone
+from AloneMusic.core.call import Call as Alone
 from AloneMusic.utils.database import is_music_playing, music_off
 from AloneMusic.utils.decorators import AdminRightsCheck
 from AloneMusic.utils.inline import close_markup
