@@ -11,7 +11,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from AloneMusic import YouTube, app
-from AloneMusic.core.call import Alone
+from AloneMusic.core.call import Call as Alone
 from AloneMusic.misc import db
 from AloneMusic.utils import AdminRightsCheck, seconds_to_min
 from AloneMusic.utils.inline import close_markup
