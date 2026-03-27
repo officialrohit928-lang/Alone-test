@@ -314,22 +314,29 @@ async def play_commnd(
 
 
 # 🔹 Stream End Handler for autoplay
-@Alone.on_update()
+from AloneMusic.core.call import Alone
+from pytgcalls.types.update import StreamEnded
+from AloneMusic.utils.database import get_related_song, LAST_PLAYED  # assume ye helper functions hain
+
+# primary assistant (one) ke liye
+@Alone.one.on_update()
 async def stream_end_handler(client, update):
-    from pytgcalls.types.update import StreamEnded
     if isinstance(update, StreamEnded):
         chat_id = update.chat_id
         if chat_id in LAST_PLAYED:
             next_song_url = get_related_song(LAST_PLAYED[chat_id])
             if next_song_url:
                 try:
-                    await Alone.stream_call(next_song_url)
+                    await Alone.stream_call(next_song_url)  # ye method properly defined honi chahiye
                     LAST_PLAYED[chat_id] = next_song_url
                 except Exception as e:
                     print(f"Autoplay failed: {e}")
             else:
-                await Alone.leave_call(chat_id)
-          
+                try:
+                    await Alone.one.leave_call(chat_id)
+                except Exception:
+                    pass
+                  
 @app.on_callback_query(filters.regex("MusicStream") & ~BANNED_USERS)
 @languageCB
 async def play_music(client, CallbackQuery, _):
