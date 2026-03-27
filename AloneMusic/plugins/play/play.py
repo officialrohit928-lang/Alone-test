@@ -314,7 +314,7 @@ async def play_commnd(
 
 
 # 🔹 Stream End Handler for autoplay
-from AloneMusic.core.call import Alone
+from AloneMusic.core.call import Call as Alone
 from pytgcalls.types.update import StreamEnded
 from AloneMusic.utils.database import get_related_song, LAST_PLAYED  # assume ye helper functions hain
 
