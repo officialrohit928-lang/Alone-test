@@ -11,7 +11,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from AloneMusic import app
-from AloneMusic.core.call import Alone
+from AloneMusic.core.call import Call as Alone
 from AloneMusic.misc import SUDOERS, db
 from AloneMusic.utils import AdminRightsCheck
 from AloneMusic.utils.database import is_active_chat, is_nonadmin_chat
