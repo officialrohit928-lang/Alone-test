@@ -10,7 +10,7 @@ from youtubesearchpython import VideosSearch
 import config
 from AloneMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube,
                         app)
-from AloneMusic.core.call import Alone
+from AloneMusic.core.call import Call as Alone
 from AloneMusic.utils import seconds_to_min, time_to_seconds
 from AloneMusic.utils.channelplay import get_channeplayCB
 from AloneMusic.utils.decorators.language import languageCB
