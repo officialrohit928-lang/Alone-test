@@ -14,7 +14,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 import config
 from AloneMusic import YouTube, app
-from AloneMusic.core.call import Alone
+from AloneMusic.core.call import Call as Alone
 from AloneMusic.misc import SUDOERS, db
 from AloneMusic.utils.database import (get_active_chats, get_lang,
                                        get_upvote_count, is_active_chat,
