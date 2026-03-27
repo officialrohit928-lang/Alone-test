@@ -16,7 +16,7 @@ from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
 from AloneMusic import LOGGER, app, userbot
-from AloneMusic.core.call import Alone
+from AloneMusic.core.call import Call as Alone
 from AloneMusic.misc import sudo
 from AloneMusic.plugins import ALL_MODULES
 from AloneMusic.utils.database import get_banned_users, get_gbanned
