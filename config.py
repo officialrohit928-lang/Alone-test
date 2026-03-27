@@ -89,7 +89,7 @@ votemode = {}
 autoclean = []
 confirmer = {}
 
-START_VIDEO_URL = "https://files.catbox.moe/vyqh3y.mp4"
+START_VIDEO_URL = "https://files.catbox.moe/du38oh.mp4"
 
 START_IMG_URL = getenv(
     "START_IMG_URL",
