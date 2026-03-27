@@ -14,7 +14,7 @@ from pyrogram.enums import ChatType
 
 import config
 from AloneMusic import app
-from AloneMusic.core.call import Alone, autoend
+from AloneMusic.core.call import Call as Alone, autoend
 from AloneMusic.utils.database import get_client, is_active_chat, is_autoend
 
 
