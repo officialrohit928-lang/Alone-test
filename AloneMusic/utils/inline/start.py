@@ -15,7 +15,7 @@ def start_panel(_):
             InlineKeyboardButton(
                 text=_["S_B_2"],
                 url=config.SUPPORT_CHAT,
-                style=ButtonStyle.SUCCESS
+                style=ButtonStyle.SECONDARY
             ),
         ],
     ]
