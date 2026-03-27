@@ -15,7 +15,7 @@ def start_panel(_):
             InlineKeyboardButton(
                 text=_["S_B_2"],
                 url=config.SUPPORT_CHAT,
-                style=ButtonStyle.SECONDARY
+                style=ButtonStyle.DANGER
             ),
         ],
     ]
@@ -40,7 +40,7 @@ def private_panel(_):
             InlineKeyboardButton(
                 text="💌 ʏᴛ-ᴀᴘɪ",
                 callback_data="bot_info_data",
-                style=ButtonStyle.DANGER
+                style=ButtonStyle.SUCCESS
             ),
         ],
         [
