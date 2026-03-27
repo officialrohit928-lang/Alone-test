@@ -12,7 +12,7 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 
 import config
 from AloneMusic import YouTube, app
-from AloneMusic.core.call import Alone
+from AloneMusic.core.call import Call as Alone
 from AloneMusic.misc import db
 from AloneMusic.utils.database import get_loop
 from AloneMusic.utils.decorators import AdminRightsCheck
