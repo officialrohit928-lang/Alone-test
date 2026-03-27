@@ -22,7 +22,7 @@ def help_pannel(_, START: Union[bool, int] = None):
     second = [
         InlineKeyboardButton(
             text=_["BACK_BUTTON"],
-            callback_data="settings_back_helper",  # ✅ fixed typo
+            callback_data="settingsback_helper",  # ✅ fixed typo
             style=ButtonStyle.PRIMARY if ButtonStyle else None
         ),
     ]
